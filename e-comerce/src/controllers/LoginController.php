@@ -21,6 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        // Debugging para verificar se o usuário foi encontrado
+        error_log("Login attempt for email: $email, Result: " . print_r($user, true));
+
         // Verifica se o usuário foi encontrado e a senha está correta
         if ($user && password_verify($password, $user['password'])) {
             // Define as variáveis de sessão
@@ -28,9 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['role'] = $user['role'];
             $_SESSION['user_name'] = $user['full_name'];
 
+            // Debugging para verificar a role
+            error_log("User role: " . $user['role']);
+
             // Redireciona com base no papel do usuário
-            $redirectUrl = $user['role'] === 'admin' ? '../views/AdminDashboard.php' : '../views/HomePage.php';
-            header("Location: $redirectUrl");
+            if ($user['role'] === 'admin') {
+                header('Location: ../views/AdminDashboard.php');
+            } else {
+                header('Location: ../views/HomePage.php');
+            }
             exit();
         } else {
             // Usuário não encontrado ou senha incorreta
@@ -39,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } catch (Exception $e) {
         // Registra o erro no log do servidor
-        error_log("Erro ao processar o login: " . $e->getMessage());
+        error_log("Error processing login: " . $e->getMessage());
 
         // Redireciona para a página de login com uma mensagem genérica
         header('Location: ../views/Login.php?error=Error processing login. Please try again later.');

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../config/config.php';
 
 // Verifica se o usuário é administrador
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-  header('Location: ../views/Login.php?error=Acesso restrito aos administradores.');
+  header('Location: ../views/Login.php?error=Restricted access to administrators.');
   exit();
 }
 
@@ -14,7 +14,7 @@ try {
   $stmt = $pdo->query("SELECT * FROM games");
   $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
-  error_log("Erro ao buscar produtos: " . $e->getMessage());
+  error_log("Error searching for products: " . $e->getMessage());
   $products = [];
 }
 ?>
@@ -103,12 +103,12 @@ try {
                 <td class="border border-gray-300 px-4 py-2"> <?= htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8') ?> </td>
                 <td class="border border-gray-300 px-4 py-2"> <?= htmlspecialchars($product['producer'], ENT_QUOTES, 'UTF-8') ?> </td>
                 <td class="border border-gray-300 px-4 py-2"> <?= htmlspecialchars($product['genre'], ENT_QUOTES, 'UTF-8') ?> </td>
-                <td class="border border-gray-300 px-4 py-2"> R$ <?= number_format($product['price'], 2, ',', '.') ?> </td>
+                <td class="border border-gray-300 px-4 py-2"> AU$ <?= number_format($product['price'], 2, ',', '.') ?> </td>
                 <td class="border border-gray-300 px-4 py-2"> <?= htmlspecialchars($product['stock'], ENT_QUOTES, 'UTF-8') ?> </td>
                 <td class="border border-gray-300 px-4 py-2"><img src="../uploads/<?= htmlspecialchars($product['image_url'], ENT_QUOTES, 'UTF-8') ?>" alt="Produto" class="w-20"></td>
                 <td class="border border-gray-300 px-4 py-2">
-                  <a href="EditProduct.php?id=<?= htmlspecialchars($product['id'], ENT_QUOTES, 'UTF-8') ?>" class="text-blue-500 hover:underline">Editar</a>
-                  <a href="../controllers/ProductController.php?action=delete&id=<?= htmlspecialchars($product['id'], ENT_QUOTES, 'UTF-8') ?>" onclick="return confirm('Deseja excluir este produto?');" class="text-red-500 hover:underline">Excluir</a>
+                  <a href="EditProduct.php?id=<?= htmlspecialchars($product['id'], ENT_QUOTES, 'UTF-8') ?>" class="text-blue-500 hover:underline">Edit</a>
+                  <a href="../controllers/ProductController.php?action=delete&id=<?= htmlspecialchars($product['id'], ENT_QUOTES, 'UTF-8') ?>" onclick="return confirm('Deseja excluir este produto?');" class="text-red-500 hover:underline">Delete</a>
                 </td>
               </tr>
             <?php endforeach; ?>

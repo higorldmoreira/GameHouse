@@ -6,7 +6,7 @@ require_once __DIR__ . '/../config/config.php';
 // Validação do ID do produto
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
-  header('Location: ../views/AdminDashboard.php?error=ID do produto inválido.');
+  header('Location: ../views/AdminDashboard.php?error=Invalid Product ID.');
   exit();
 }
 
@@ -18,12 +18,12 @@ try {
   $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
   if (!$product) {
-    header('Location: ../views/AdminDashboard.php?error=Produto não encontrado.');
+    header('Location: ../views/AdminDashboard.php?error=Product not found.');
     exit();
   }
 } catch (Exception $e) {
-  error_log("Erro ao buscar o produto: " . $e->getMessage());
-  header('Location: ../views/AdminDashboard.php?error=Erro ao buscar o produto.');
+  error_log("Error searching for product: " . $e->getMessage());
+  header('Location: ../views/AdminDashboard.php?error=Error searching for product.');
   exit();
 }
 ?>
@@ -51,43 +51,43 @@ try {
       <input type="hidden" name="id" value="<?= htmlspecialchars($product['id'], ENT_QUOTES, 'UTF-8') ?>">
 
       <div>
-        <label for="name" class="block text-gray-700">Nome do Produto</label>
+        <label for="name" class="block text-gray-700">Product Name</label>
         <input type="text" id="name" name="name" value="<?= htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8') ?>" required
           class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500">
       </div>
 
       <div>
-        <label for="producer" class="block text-gray-700">Produtora</label>
+        <label for="producer" class="block text-gray-700">Producer</label>
         <input type="text" id="producer" name="producer" value="<?= htmlspecialchars($product['producer'], ENT_QUOTES, 'UTF-8') ?>" required
           class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500">
       </div>
 
       <div>
-        <label for="genre" class="block text-gray-700">Gênero</label>
+        <label for="genre" class="block text-gray-700">Gender</label>
         <input type="text" id="genre" name="genre" value="<?= htmlspecialchars($product['genre'], ENT_QUOTES, 'UTF-8') ?>" required
           class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500">
       </div>
 
       <div>
-        <label for="price" class="block text-gray-700">Preço</label>
+        <label for="price" class="block text-gray-700">Price</label>
         <input type="number" step="0.01" id="price" name="price" value="<?= htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') ?>" required
           class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500">
       </div>
 
       <div>
-        <label for="stock" class="block text-gray-700">Quantidade no Estoque</label>
+        <label for="stock" class="block text-gray-700">Quantity in Stock</label>
         <input type="number" id="stock" name="stock" value="<?= htmlspecialchars($product['stock'], ENT_QUOTES, 'UTF-8') ?>" required
           class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500">
       </div>
 
       <div>
-        <label for="image" class="block text-gray-700">Imagem do Produto (opcional)</label>
+        <label for="image" class="block text-gray-700">Product Image (optional)</label>
         <input type="file" id="image" name="image" accept="image/*"
           class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500">
       </div>
 
       <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
-        Salvar Alterações
+        Save Changes
       </button>
     </form>
   </div>

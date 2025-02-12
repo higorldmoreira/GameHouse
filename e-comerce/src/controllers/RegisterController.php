@@ -9,12 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirm_password = $_POST['confirm_password'];
 
     if (!$full_name || !$email || !$password || !$confirm_password) {
-        header('Location: ../views/Register.php?error=Por favor, preencha todos os campos.');
+        header('Location: ../views/Register.php?error=Please fill in all fields.');
         exit();
     }
 
     if ($password !== $confirm_password) {
-        header('Location: ../views/Register.php?error=As senhas não coincidem.');
+        header('Location: ../views/Register.php?error=Passwords do not match.');
         exit();
     }
 
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $emailExists = $stmt->fetchColumn();
 
         if ($emailExists) {
-            header('Location: ../views/Register.php?error=E-mail já está registrado.');
+            header('Location: ../views/Register.php?error=Email is already registered.');
             exit();
         }
 
@@ -41,12 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
 
         // Redirecionar para a página de login com mensagem de sucesso
-        header('Location: ../views/Login.php?success=Conta criada com sucesso.');
+        header('Location: ../views/Login.php?success=Account created successfully.');
         exit();
     } catch (Exception $e) {
         // Registrar o erro no log do servidor
-        error_log("Erro ao registrar usuário: " . $e->getMessage());
-        header('Location: ../views/Register.php?error=Erro ao criar conta. Tente novamente mais tarde.');
+        error_log("Error registering user: " . $e->getMessage());
+        header('Location: ../views/Register.php?error=Error creating account. Please try again later..');
         exit();
     }
 }

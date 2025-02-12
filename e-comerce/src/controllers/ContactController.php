@@ -5,7 +5,7 @@ require_once '../config/config.php';
 $action = $_POST['action'] ?? $_GET['action'] ?? null;
 
 if (!$action) {
-    header('Location: ../views/AdminDashboard.php?error=Ação não especificada.');
+    header('Location: ../views/AdminDashboard.php?error=Unspecified action.');
     exit();
 }
 
@@ -21,7 +21,7 @@ switch ($action) {
         deleteProduct($pdo);
         break;
     default:
-        header('Location: ../views/AdminDashboard.php?error=Ação inválida.');
+        header('Location: ../views/AdminDashboard.php?error=Invalid action.');
         exit();
 }
 
@@ -37,7 +37,7 @@ function addProduct($pdo)
     $stock = filter_input(INPUT_POST, 'stock', FILTER_VALIDATE_INT);
 
     if (!$name || !$producer || !$genre || !$price || !$stock) {
-        header('Location: ../views/AdminDashboard.php?error=Dados inválidos.');
+        header('Location: ../views/AdminDashboard.php?error=Invalid data.');
         exit();
     }
 
@@ -50,10 +50,10 @@ function addProduct($pdo)
         $stmt->bindParam(':stock', $stock);
         $stmt->execute();
 
-        header('Location: ../views/AdminDashboard.php?success=Produto adicionado com sucesso.');
+        header('Location: ../views/AdminDashboard.php?success=Product added successfully.');
     } catch (Exception $e) {
         error_log("Erro ao adicionar produto: " . $e->getMessage());
-        header('Location: ../views/AdminDashboard.php?error=Erro ao adicionar produto.');
+        header('Location: ../views/AdminDashboard.php?error=Error adding product.');
     }
 }
 
@@ -70,7 +70,7 @@ function editProduct($pdo)
     $stock = filter_input(INPUT_POST, 'stock', FILTER_VALIDATE_INT);
 
     if (!$id || !$name || !$producer || !$genre || !$price || !$stock) {
-        header('Location: ../views/AdminDashboard.php?error=Dados inválidos.');
+        header('Location: ../views/AdminDashboard.php?error=Invalid data.');
         exit();
     }
 
@@ -84,10 +84,10 @@ function editProduct($pdo)
         $stmt->bindParam(':stock', $stock);
         $stmt->execute();
 
-        header('Location: ../views/AdminDashboard.php?success=Produto atualizado com sucesso.');
+        header('Location: ../views/AdminDashboard.php?success=Product updated successfully.');
     } catch (Exception $e) {
-        error_log("Erro ao editar produto: " . $e->getMessage());
-        header('Location: ../views/AdminDashboard.php?error=Erro ao atualizar produto.');
+        error_log("Error editing product: " . $e->getMessage());
+        header('Location: ../views/AdminDashboard.php?error=Error updating product.');
     }
 }
 
@@ -99,7 +99,7 @@ function deleteProduct($pdo)
     $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
     if (!$id) {
-        header('Location: ../views/AdminDashboard.php?error=ID inválido.');
+        header('Location: ../views/AdminDashboard.php?error=Invalid ID.');
         exit();
     }
 
@@ -108,9 +108,9 @@ function deleteProduct($pdo)
         $stmt->bindParam(':id', $id);
         $stmt->execute();
 
-        header('Location: ../views/AdminDashboard.php?success=Produto excluído com sucesso.');
+        header('Location: ../views/AdminDashboard.php?success=Product deleted successfully.');
     } catch (Exception $e) {
-        error_log("Erro ao excluir produto: " . $e->getMessage());
-        header('Location: ../views/AdminDashboard.php?error=Erro ao excluir produto.');
+        error_log("Error deleting product: " . $e->getMessage());
+        header('Location: ../views/AdminDashboard.php?error=Error deleting product.');
     }
 }

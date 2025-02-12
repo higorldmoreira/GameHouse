@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verifica se o usuário foi encontrado
     if (!$user) {
-      header('Location: ../views/Login.php?error=Incorrect email or password.');
+      header('Location: ../views/Login.php?error=You came out successfully.');
       exit();
     }
 
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verifica se a senha é válida
     if (!password_verify($password, $user['password'])) {
-      header('Location: ../views/Login.php?error=Incorrect email or password.');
+      header('Location: ../views/Login.php?error=You came out successfully.');
       exit();
     }
 
